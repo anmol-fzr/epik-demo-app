@@ -1,34 +1,29 @@
-import { Stack } from "expo-router";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { useUnistyles } from "react-native-unistyles";
+import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
+import { useFonts } from 'expo-font';
+import { Stack } from 'expo-router';
+import { StatusBar } from 'expo-status-bar';
+import 'react-native-reanimated';
 
-export const unstable_settings = {
-	// Ensure that reloading on `/modal` keeps a back button present.
-	initialRouteName: "(drawer)",
-};
+import { useColorScheme } from '@/hooks/useColorScheme';
 
 export default function RootLayout() {
-	const { theme } = useUnistyles();
+  const colorScheme = useColorScheme();
+  const [loaded] = useFonts({
+    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+  });
 
-	return (
-		<GestureHandlerRootView style={{ flex: 1 }}>
-			<Stack
-				screenOptions={{
-					headerStyle: {
-						backgroundColor: theme.colors.background,
-					},
-					headerTitleStyle: {
-						color: theme.colors.foreground,
-					},
-					headerTintColor: theme.colors.foreground,
-				}}
-			>
-				<Stack.Screen name="(drawer)" options={{ headerShown: false }} />
-				<Stack.Screen
-					name="modal"
-					options={{ title: "Modal", presentation: "modal" }}
-				/>
-			</Stack>
-		</GestureHandlerRootView>
-	);
+  if (!loaded) {
+    // Async font loading only occurs in development.
+    return null;
+  }
+
+  return (
+    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+      <Stack>
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="+not-found" />
+      </Stack>
+      <StatusBar style="auto" />
+    </ThemeProvider>
+  );
 }
