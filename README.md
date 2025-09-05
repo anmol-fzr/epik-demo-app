@@ -51,7 +51,7 @@ bun run dev
 
 ```cd apps/native
 npm install
-npx expo start
+npm run android
 ```
 
 ---

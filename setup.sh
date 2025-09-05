@@ -26,10 +26,6 @@ else
 fi
 
 log "Running the Project ..."
-if npm run dev; then
-    log "Project is running."
-else
-    log "Error: Failed to run the Project."
-    log "Go Back to https://github.com/anmol-fzr/epik-demo-app"
-    exit 1
-fi
+
+cd apps/native && npm i && npm run android &
+cd apps/server && npm i && npm run dev
