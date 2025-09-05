@@ -32,7 +32,7 @@ To run the setup commands and use this project effectively, you'll need the foll
 ## 🚀 Running the Project
 
 > ⚠️ Note:
-> Before running the app, make sure to edit the .env file in /apps/native with the correct backend server URL 
+> Before running the app, make sure to edit the .env file in /apps/native with the correct backend server URL. \
 > API Key is already in the .env file in /apps/server
 
 There are **two ways** to start the application:  
