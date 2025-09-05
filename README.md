@@ -41,8 +41,8 @@ npx expo start
 
 ## 🏗️ Architecture
 
-[React Native App] --(query)--> [Hono Backend] --(prompt)--> [LLM API] \n
-^                                                                   | \n
+[React Native App] --(query)--> [Hono Backend] --(prompt)--> [LLM API] <br>
+^                                                                   | <br>
 |----------------------(recommendations JSON)<----------------------|
 
 - **Frontend**:  
