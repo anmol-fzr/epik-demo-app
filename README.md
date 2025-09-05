@@ -1,6 +1,6 @@
 # AI Product Advisor – React Native Assignment
 
-[Working](https://raw.githubusercontent.com/anmol-fzr/attack-capital-blog/refs/heads/main/usage.webp)
+[Working](https://raw.githubusercontent.com/anmol-fzr/epik-demo-app/refs/heads/main/usage.webp)
 
 ## 📌 Overview
 This project is a small prototype of an **AI-powered product advisor**, built as part of the Getepik.in assignment.  
