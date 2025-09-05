@@ -20,7 +20,8 @@ There are **two ways** to start the application:
 
 ### 1️⃣ Preferred: Turbo (single command)
 ```bash
-# From the project root
+bun install
+
 turbo dev
 ```
 
@@ -40,8 +41,8 @@ npx expo start
 
 ## 🏗️ Architecture
 
-[React Native App] --(query)--> [Hono Backend] --(prompt)--> [LLM API]
-^                                                                   |
+[React Native App] --(query)--> [Hono Backend] --(prompt)--> [LLM API] \n
+^                                                                   | \n
 |----------------------(recommendations JSON)<----------------------|
 
 - **Frontend**:  
