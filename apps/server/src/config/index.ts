@@ -1,8 +1,6 @@
-import { products } from '@/db';
 import { systemPrompt } from '@/utils/const';
 import { google } from '@ai-sdk/google';
-import { streamText, tool } from 'ai';
-import { z } from 'zod';
+import { streamText } from 'ai';
 
 // const productSchema = z.object({
 //   brand: z.string().describe("The Brand / Company of the Product"),

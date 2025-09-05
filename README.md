@@ -21,17 +21,20 @@ There are **two ways** to start the application:
 ### 1️⃣ Preferred: Turbo (single command)
 ```bash
 # From the project root
-turbo dev```
+turbo dev
+```
 
 ### Manual: Run in separate terminals
 
 ```cd apps/server
 bun install
-bun run dev```
+bun run dev
+```
 
 ```cd apps/native
 npm install
-npx expo start```
+npx expo start
+```
 
 ---
 
@@ -103,6 +106,7 @@ npx expo start```
 cd backend
 bun install
 bun run dev
+```
 ---
 
 ## 📂 File Structure
@@ -199,23 +203,28 @@ bun run dev
 ## 🔑 Key Design Decisions
 
 1. **Separation of Concerns**  
-   - Backend handles catalog + AI calls.  
-   - Frontend focuses only on UI/UX.
+- Backend handles catalog + AI calls.  
+- Frontend focuses only on UI/UX.
 
 2. **Prompt Engineering**  
-   - Backend forces AI to return structured JSON:
-     ```txt
-     You are an AI product advisor.
-     Recommend products only from this catalog:
-     ${PRODUCT_CATALOG}
+- Backend forces AI to return structured JSON:
+    ```txt
+    You are the best AI product recommender.
+    Given a user’s request and an array of products, analyze the requirements and recommend the 2–4 most relevant products.
+    Always justify your choices briefly and ensure recommendations are accurate, helpful, and user-focused.
 
-     User query: "I need a lightweight laptop for travel"
-     Return JSON:
-     [
-       { "name": "Product A", "why": "Reasoning..." }
-     ]
-     ```
-   - Ensures predictable parsing on the frontend.
+    You can't ask any questions back, and you must return 2 products atleast.
+    Available Products are ${PRODUCT_CATALOG}
+
+    User Prompt: ${q}
+
+    You must return the response in a JSON Object like this
+    {
+    product_names: ["product_1_name", "product_2_name", ...],
+    reason: "The Reason why you recommended these products"
+    }
+    ```
+- Ensures predictable parsing on the frontend.
 
 3. **Minimal but Polished UX**  
    - Simple **two-screen flow**: Input → Results.  
