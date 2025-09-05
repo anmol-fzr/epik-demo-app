@@ -1,4 +1,4 @@
-export const products = [
+const allProducts = [
   {
     "brand": "CURAPOD by litemed",
     "product_name": "Adaptive Pain Management",
@@ -288,7 +288,7 @@ export const products = [
   },
   {
     "brand": "PandaX",
-    "product_name": "Wi-Fi Video Doorbell",
+    "product_name": "i-Fi Video Doorbell",
     "price": 5099,
     "category": "Security & Surveillance",
     "description": "See and speak to visitors at your door from anywhere with the PandaX Wi-Fi Video Doorbell, featuring two-way audio and motion detection."
@@ -357,3 +357,58 @@ export const products = [
     "description": "Capture every detail of your journey with the Qubo Dash Cam Pro, featuring high-quality video recording and a range of advanced safety features."
   }
 ]
+
+type IProduct = {
+  brand: string;
+  product_name: string;
+  price: number;
+  category: string;
+  description: string;
+}
+
+type ProductName = IProduct["product_name"]
+type ProductMap = Map<ProductName, IProduct>
+type IProducts = IProduct[]
+
+class Products {
+  private productsMap: ProductMap
+  private products: IProducts
+
+  constructor(products: IProducts) {
+    const map = new Map<ProductName, IProduct>()
+    products.forEach(product => {
+      map.set(product.product_name.trim().toLowerCase(), product)
+    })
+    this.productsMap = map
+    this.products = products
+  }
+
+  getAllProducts() {
+    return this.products
+  }
+
+  getProductByName(name: ProductName) {
+    return this.products.filter(product => {
+      return product.product_name.includes(name) || name.includes(product.product_name)
+    })
+    //return this.productsMap.get(name.trim().toLowerCase())
+  }
+
+  getProductsByName(names: ProductName[]) {
+    const foundProds: IProducts = []
+
+    names.forEach(name => {
+      console.log(`Searching for Product Named ${name}`)
+      const foundProd = this.getProductByName(name)
+      if (foundProd !== undefined) {
+        foundProds.push(...foundProd)
+      }
+    })
+
+    return foundProds
+  }
+}
+
+const products = new Products(allProducts)
+
+export { products }

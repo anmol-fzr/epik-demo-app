@@ -6,42 +6,54 @@ import { streamText as streaming } from "hono/streaming";
 import { streamText } from "ai";
 import { google } from "@ai-sdk/google";
 import { askAi } from "./config";
+import { products } from "./db";
 
 const app = new Hono();
 
 app.use(logger());
 
 app.use(
-  "/*",
+  "*",
   cors({
-    origin: process.env.CORS_ORIGIN || "",
+    origin: "*",
     allowMethods: ["GET", "POST", "OPTIONS"],
   }),
 );
 
+
+app.get("/products", async (c) => {
+  return c.json(products.getAllProducts())
+})
+
 app.get("/recommend", async (c) => {
-  return streaming(c, async (stream) => {
-    const query = c.req.query("query")
-    if (!query || !query?.trim()) {
-      return c.json({
-        message: "Please Give Some Query for Recommendation",
-        error: "Please Give Some Query for Recommendation",
-      })
-    }
+  const query = c.req.query("query")
+  if (!query || !query?.trim()) {
+    return c.json({
+      message: "Please Give Some Query for Recommendation",
+      error: "Please Give Some Query for Recommendation",
+    })
+  }
 
-    const { textStream } = askAi(query);
+  const { textStream } = askAi(query);
 
-    let response: string = ""
+  let response: string = ""
 
-    for await (const textPart of textStream) {
-      console.log(textPart)
-      response += textPart
-      await stream.writeln(textPart)
-    }
+  for await (const textPart of textStream) {
+    response += textPart
+  }
+  // This is Still Blocking
 
-    console.log(response)
+  var lines = response.split('\n');
+  lines.splice(0, 1);
+  lines.splice(lines.length - 1, 1);
+  const newText = lines.join('\n');
 
-    stream.abort()
+  const obj = JSON.parse(newText)
+  const prods = products.getProductsByName(obj.product_names)
+
+  return c.json({
+    reason: obj.reason,
+    products: prods,
   })
 });
 
